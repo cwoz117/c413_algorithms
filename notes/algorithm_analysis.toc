@@ -1,0 +1,7 @@
+\contentsline {chapter}{\numberline {1}Algorithm Analysis}{2}{chapter.1}
+\contentsline {section}{\numberline {1.1}Asymptotic Analysis}{3}{section.1.1}
+\contentsline {subsection}{\numberline {1.1.1}Bounds}{3}{subsection.1.1.1}
+\contentsline {subsubsection}{Upper Bound}{3}{section*.2}
+\contentsline {subsubsection}{Lower Bound}{3}{section*.3}
+\contentsline {subsubsection}{$\Theta $ notation}{3}{section*.4}
+\contentsline {subsection}{\numberline {1.1.2}Simplifying Rules}{4}{subsection.1.1.2}

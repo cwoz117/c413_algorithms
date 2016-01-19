@@ -1,0 +1,82 @@
+\documentclass{report}
+\usepackage[hidelinks]{hyperref}
+\usepackage{amsthm}
+\usepackage{listings}
+
+\theoremstyle{definition}
+\newtheorem*{examp}{Ex}
+
+\title{Algorithm Analysis Textbook Notes}
+\author{Chris Wozniak}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\chapter{Algorithm Analysis}
+	Asymptotic analysis compares the resource consumption of a set of algorithms, comparing their runtime/memory use/disk space
+	to determine which algorithm would be better to solve a particular solution. We can then rate their efficiencies as data sets become
+	increasingly larger. The primary consideration when estimating an algorithms perfoamance is:
+	\begin{itemize}
+		\item \textbf{Basic Operations - } The number of operations required by the algorithm to process an input.
+		\item \textbf{Input Size - } The number of inputs the algorithm must process to complete its task (How many
+				Items a search algorithm must iterate through, number of elements to sort etc..)
+	\end{itemize}
+	Consider an algorithm to find the largest value in an array of $n$ integers. The algorithm looks at each integer, saving
+	the largest value seen so far. It is often called the \textit{Largest-Value Sequential Search}
+\begin{lstlisting}[language=c]
+static int largest(int *a){
+	int currrent_large = 0;
+	for (int i = 1; i < sizeof(a); i++)
+		if (a[current_large] < a[i])
+			current_large = i;
+	return a[current_large];
+}
+\end{lstlisting}
+	We introduce a function $T(n) = cn$ to represent the growth rate for a running time of this algorithm. The value $c$ 
+	represents all the constant time (incrementing $i$, comparing two values in the array etc..) and $n$ represents the 
+	size of the array.
+\newpage
+	The \textbf{growth rate} for an algorithm is the rate at which the cost of the algorithm grows as the size of its input grows.
+	There are several \textit{classes} of growth rates:
+	\begin{itemize}
+		\item \textbf{Linear - } $cn$, for some positive integer $c$ means that the running time grows proportionally to the 
+			size of the input. ie: $10n, 2n$
+		\item \textbf{Quadratic - } $cn^2$, $cn^3$ The highest order term is a square, cube, or some constant.
+		\item \textbf{Exponential - } An exponential growth rate has the input size placed in the exponent: $2^n$ $n!$ is
+			also a type of exponential growth.
+	\end{itemize}
+\section{Asymptotic Analysis}
+	Asymptotic analysis is when we look primarily at the growth rate of an algorithm. Faster computers or shedding 
+	some of the constant factors down could improve performace, but it would only change when the intersection would 
+	occur, not whether it would occur. However, we must be aware that for small input sizes, sometimes higher performance
+	algorithms aren't the best to use.
+	\subsection{Bounds}
+		We describe the estimations of running time in many ways, to help remove the ambiguity mentioned above. The
+		\textbf{Upper Bound} running time represents the highest growth rate that an algorithm can have.
+		\subsubsection{Upper Bound}
+			If we were talking about a specific algorithm, which has the largest growth rate $f(n)$ in the worst case, we use Big-O
+			notation: $O(f(n))$ \textit{in the worst case.} to describe our upper bound. (the most work it has to perform). It should
+			be noted that we could also be talking about the upper bound in the best case, or average case as well.
+		\subsubsection{Lower Bound}
+			Similar to Upper bounds, but referring to the shortest growth rate seen by the algorithm, in best/average/worst use cases.
+		\subsubsection{$\Theta$ notation}
+			$\Theta$ notation is used when the Upper and Lower bounds are the same.
+\newpage
+	\subsection{Simplifying Rules}
+		Once we determine the running-time equation for an algorithm it is simple to derive $O(n)$, $\Omega(n)$, $\Theta(n)$
+		expressions. Use these following Rules:
+		\begin{enumerate}
+			\item If $f(n)$
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
