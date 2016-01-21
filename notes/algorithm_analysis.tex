@@ -5,6 +5,7 @@
 
 \theoremstyle{definition}
 \newtheorem*{examp}{Ex}
+\newtheorem*{theo}{Theorem}
 
 \title{Algorithm Analysis Textbook Notes}
 \author{Chris Wozniak}
@@ -67,14 +68,101 @@ static int largest(int *a){
 		expressions. Use these following Rules:
 		\begin{enumerate}
 			\item If $f(n)$
+		\end{enumerate}
 
+\chapter{Graph Theory}
+	A \textbf{Graph} is a simple way of encoding pairwise relationships among a set of objects. It consists of a set of 
+	\textbf{Nodes} ($V$) and a set of \textbf{Edges} ($E$). Each edge joins two of the nodes, thus an edge is represented as a 
+	two element subset $e=\{u,v\}$ for some $u, v \in V$. We call $u$, and $v$ the \textbf{ends} of $e$.\\
 
+	Edges in a graph indicate a symmetric relationship, however if we want an asymmetric relationship we must use a 
+	\textbf{directed graph}, which is only different in that the edge $E'$ is an ordered pair, and cannot be reversed. These
+	are often called the \textbf{tail} and the \textbf{head} respectively.
+	\section{Paths and Connectivity}
+		One of the fundamental operations in a grph is that of traversing a sequence of nodes, connected by edges. We define a 
+		\textbf{path} in an undirected graph $G = (V, E)$ to be a sequence $P$ of nodes $v_i, v_{i+1}, \dots, v_k$ with the
+		property that each consecutive pair $v_i, v_{i+1}$ are joined by an edge in $G$. A \textbf{Cycle} is a path in which 
+		the path circles back to the initial node, but no other nodes cross.\\
+		
+		We say that an undirected graph is \textbf{connected} if for every pair of nodes $u, v$ there is a path from $u$ to
+		$v$. Note that in a directed graph we may have a path from $u$ to $v$ but not vice-versa, so it may be harder to 
+		determine if a directed graph is \textit{connected}.\\
 
+		The \textbf{distance} between two nodes $u$ and $v$ to be the minimum number of edges in a $u$-$v$ path. We 
+		can designate the symbol $\infty$ to denote the distance between nodes not connected by a path.
+\newpage
+	\section{Trees}
+		We say that an undirected graph is a \textbf{tree} if it is connected and does not contain a cycle. Trees have a
+		few ways to represent the data:
+		\begin{itemize}
+			\item \textbf{Descendents} - Nodes have \textbf{Children} underneith them, and \textbf{parents} above them.
+				Children are \textbf{descendants} of higher level nodes. 
+			\item \textbf{Upside-down trees} - We have an initial \textbf{root} node, and subsequent nodes are roots 
+				so long as the the particular node has children. \textbf{Leaf} nodes are the end nodes that do not
+				have any children.
+		\end{itemize}
+		\textit{Rooted} trees are fundamental objects in computers, as they encode the notion of a \textbf{hierarchy}.
+		They are used in file directories, company staff hierarchies, websites and so on.\\
+	
+		Given a Tree $T$ with $n$ nodes, how many edges does it have? Each node other than the root has a single
+		edge leading ``upward" to its parent. Thus it is easy to see that every $n$-node tree has exactly $n-1$ edges. 
+		it is also connected, and does not contain a cycle.
+	\section{Connectivity and Traversal}
+		\subsection{Graph Connectivity}
+			There are some basic algorithmic questions to be asked about graphs: node-to-node connectivity. Suppose
+			we are given a graph $G=(V, E)$ and two particular nodes $s, t$. Is there a path from $s$ to $t$ in $G$?
+			we call this problem determining $s$-$t$ connectivity. This could also be called the ``Maze-Solving" problem
+			for finding the fastest way from room $s$ to room $t$ as fast as possible.
+			\subsubsection{Breadth-First Search (BFS)}
+				The simplest algorithm for determining $s$-$t$ connectivity. We explore outward from $s$ in all
+				possible directions, adding nodes one \textit{layer} at a time. We queue the nodes to be searched
+				behind every node already identified to be searched.
+				\begin{enumerate}
+					\item Starting at $s$, include all nodes that are joined by an edge to $s$.
+					\item Enter the next node in the queue, say node $d$
+					\item Include all nodes joined to $d$ except for the connection to $s$ (if undirected)
+					\item continue until all nodes are searched.
+				\end{enumerate}
+				If we remember which ``level" of the search we are on (the nodes connected to $s$ being level 1, then all 
+				of the connections found from searching those nodes being layer 2 etc..) we will know if a path exists, and how 
+				short the path is.
+				\begin{theo}
+					For each $j >= 1$, layer $L_j$ produced by BFS consists of all nodes at distance exactly $j$ from $s$. 
+					There is a path from $s$ to $t$ if and only if $t$ appears in some layer.
+				\end{theo}
+				Additionally, a BFS allso produces a tree $T$ rooted at $s$ on the set of nodes reachable from $s$. So if we
+				had a messy graph and wanted a nice tree with a specific root, we could run a BFS to organize it for us. This is
+				often called a \textbf{breadth-first search tree}. Note that some edges are ignored if they lead to nodes that 
+				have already been identified in the BFST.
+			\subsubsection{Depth-First Search (DFS)}
+				Another natural method to find the nodes reachable from $s$ is that you keep searching through each node
+				found until you run out of edges, in which case you back up to the next available edge and continue.\\
 
-
-
-
-
+				 This is similar to the BFS, but if you replaced the queue with a stack, though it is most easily 
+				described recursively, so we will do this here.
+\begin{lstlisting}
+dfs{u}:
+	Mark u as "visited" and add u to R
+	for each edge(u, v) incident from u
+		if v is not "visited"
+			dfs(v)
+\end{lstlisting}
+				This will also create a tree with root $T$ it will however, be completely different than a BFST. While a BFST
+				is a nice relatively balanced tree, a DFST will have one long stem with nodes spanning out from it. This gives
+				us a unique property:
+				\begin{theo}
+					For a given recursive call $DFS(u)$ all nodes that are marked as "visited" between the start, and end
+					of this recursive call are descendants of $u$ itself.
+				\end{theo}
+				This can be used to prove that:
+				\begin{theo}
+					Let $x, y$ be nodes in a DFS tree $T$. Let $e$ =($x$,$y$) be an edge $\in G$. If $e$ is \textbf{not}
+					an edge of $T$, then x or y is an ancestor of each other.
+				\end{theo}
+	\section{Implementation using queues and stacks}
+		appears to have been covered above..
+	\section{Testing Bipartiteness: Application of BFS}
+		A \textbf{Bipartite graph}
 
 
 
