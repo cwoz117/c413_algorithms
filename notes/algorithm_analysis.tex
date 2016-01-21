@@ -6,6 +6,8 @@
 \theoremstyle{definition}
 \newtheorem*{examp}{Ex}
 \newtheorem*{theo}{Theorem}
+\newtheorem*{alg}{Algorithm}
+\newtheorem*{prf}{Proof}
 
 \title{Algorithm Analysis Textbook Notes}
 \author{Chris Wozniak}
@@ -161,8 +163,101 @@ dfs{u}:
 				\end{theo}
 	\section{Implementation using queues and stacks}
 		appears to have been covered above..
+\newpage
 	\section{Testing Bipartiteness: Application of BFS}
-		A \textbf{Bipartite graph}
+		A \textbf{Bipartite graph} is a graph where nodes $V$ can be divided into two sub-groups such that every edge in the
+		graph has one end in each group.\\
+		\begin{theo}
+			If a graph contains an odd-numbered cycle, it cannot be bipartite. Or: If a graph is Bipartite, it cannot have a
+			cycle with an odd number of nodes.
+		\end{theo}
+		\begin{examp}
+			A triangle has 3 edges and 3 nodes, this means that if we coloured each node one of two colours, there is no way
+			we will have \textbf{all} of our edges connected to both colours. There will be at least one edge connected to the 
+			same colour.
+		\end{examp}
+		\subsection{Designing the algorithm}
+			Suppose we were given a large graph, which was jumbled up and not easy to tell if it was bipartite. Can we come up
+			with an algorithm to answer the question: "Is the graph bipartite?"
+			\begin{alg}
+				It turns out that a breadth-first search algorithm is a perfect algorithm for this kind of question. We only implement a 
+				colour scheme and it becomes easy to prove:
+				\begin{enumerate}
+					\item Assume the mess is connected, if not we simply separate the Graph into multiple smaller ones, and continue
+						on each one.
+					\item Pick any node $s$, and colour it red.
+					\item All neighbors of $s$ are then coloured blue, then when we reach a blue node, all neighbors are coloured red
+						etc\dots
+				\end{enumerate}
+				Let $G$ be a connected graph, and ($L_1, L_2, \dots$) be the layers produced by BFS starting at node $s$. Then
+				exactly one of the following two things must hold:
+				\begin{enumerate}
+					\item There is no edge of $G$ joining two nodes of the same layer. In this case $G$ is a a bipartite
+						graph in which the nodes in even and odd layers are different colours.
+					\item There is an edge of $G$ joining two nodes of the same layer. Thus G contains an odd-length
+						cycle, so it cannot be bipartite
+				\end{enumerate}
+			\end{alg}
+	\section{Connectivity in Directed Graphs}
+		A directed graph has edges which are ordered pairs, representing direction. Nodes for directed graphs
+		will now have two lists: a list of nodes it comes from, and a list of nodes it goes to.
+		\subsection{Graph Search Algorithms}
+			BFS, and DFS are almost the same as they are in undirected graphs, and perform the same amount of work $O(m+n)$
+			However, there are some key differences compared to an undirected graph:  In a directed graph it is possible for a
+			node $s$ to have a path to $t$ but not the other way around.
+		\subsection{Strong Connectivity}
+			A directed graph is said to have \textbf{strong connectivity} if for every two nodes $u, v \in V$ there is a pair of
+			directed edges connecting them from either side (giving a directed graph an undirected quality between $u$ and $v$).\\
+			
+			Another term is to say that nodes $u$ and $v$ are \textbf{mutually reachable}. This is a transitive property:
+			\begin{examp}
+				If nodes $u$ and $v$ are mutually reachable, and $v$ and $t$ are mutually reachable, then $u$ and $t$ are
+				mutually reachable.
+			\end{examp}
+	\section{Directed Acyclic Graphs, and Topological Ordering}
+		If an undirected graph has no cycles, then it is a simple structure: each of its connected components is a tree. But it is
+		possible for a directed graph to have no cycles, and still be a weird structure. This is known as a 
+		\textbf{Directed, Acyclic Graph, or (DAG)}
+		\begin{examp}
+			A directed graph with many edges.
+		\end{examp}
+		\subsection{The Problem}
+			DAG's can be used to encode precedence relations, or dependancies in a natural way. Suppose we had a set of tasks
+			to be performed: $(1, 2, \cdots, n)$ that need to be performed, and dependancies amung them stipulating that for 
+			certain pairs $i$ and $j$ that $i$ must be performed before $j$ like course prerequisites, or pipelined scripted tasks.\\
+
+			Each task to be performed will be a node, and a directed edge from $(i, j)$ will be drawn whenever there is
+			dependance. Note that if a cycle exists, there will be no way to perform any task, as they all depend on each 
+			others output to be treated as input (ie deadlock).\\
+
+			Once the graph is made we need to order our nodes such that for every dependancy $(i, j)$, $i$ comes before $j$.
+			This is known as a \textbf{Topological Ordering} of $G$, and all edges point in one direction (forward).
+			
+			\begin{alg}
+				If $G$ is a DAG, then there is one node which does not require input from a previous node. From here we see
+				our basic algorithm:
+				\begin{enumerate}
+					\item Find a node $v$ with no dependant nodes
+					\item Remove this item from the Graph, but note it down.
+					\item Recursively act on this new graph $G-(v)$
+					\item Append the returned value after $v$
+				\end{enumerate}
+			\end{alg}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

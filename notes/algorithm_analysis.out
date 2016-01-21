@@ -9,3 +9,9 @@
 \BOOKMARK [2][-]{subsection.2.3.1}{Graph Connectivity}{section.2.3}% 9
 \BOOKMARK [1][-]{section.2.4}{Implementation using queues and stacks}{chapter.2}% 10
 \BOOKMARK [1][-]{section.2.5}{Testing Bipartiteness: Application of BFS}{chapter.2}% 11
+\BOOKMARK [2][-]{subsection.2.5.1}{Designing the algorithm}{section.2.5}% 12
+\BOOKMARK [1][-]{section.2.6}{Connectivity in Directed Graphs}{chapter.2}% 13
+\BOOKMARK [2][-]{subsection.2.6.1}{Graph Search Algorithms}{section.2.6}% 14
+\BOOKMARK [2][-]{subsection.2.6.2}{Strong Connectivity}{section.2.6}% 15
+\BOOKMARK [1][-]{section.2.7}{Directed Acyclic Graphs, and Topological Ordering}{chapter.2}% 16
+\BOOKMARK [2][-]{subsection.2.7.1}{The Problem}{section.2.7}% 17

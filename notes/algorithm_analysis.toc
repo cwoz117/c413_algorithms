@@ -13,4 +13,10 @@
 \contentsline {subsubsection}{Breadth-First Search (BFS)}{6}{section*.5}
 \contentsline {subsubsection}{Depth-First Search (DFS)}{7}{section*.6}
 \contentsline {section}{\numberline {2.4}Implementation using queues and stacks}{7}{section.2.4}
-\contentsline {section}{\numberline {2.5}Testing Bipartiteness: Application of BFS}{7}{section.2.5}
+\contentsline {section}{\numberline {2.5}Testing Bipartiteness: Application of BFS}{8}{section.2.5}
+\contentsline {subsection}{\numberline {2.5.1}Designing the algorithm}{8}{subsection.2.5.1}
+\contentsline {section}{\numberline {2.6}Connectivity in Directed Graphs}{8}{section.2.6}
+\contentsline {subsection}{\numberline {2.6.1}Graph Search Algorithms}{9}{subsection.2.6.1}
+\contentsline {subsection}{\numberline {2.6.2}Strong Connectivity}{9}{subsection.2.6.2}
+\contentsline {section}{\numberline {2.7}Directed Acyclic Graphs, and Topological Ordering}{9}{section.2.7}
+\contentsline {subsection}{\numberline {2.7.1}The Problem}{9}{subsection.2.7.1}
